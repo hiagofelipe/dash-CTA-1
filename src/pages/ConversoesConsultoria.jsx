@@ -1,63 +1,53 @@
 import Header from '../components/Header'
-import KpiCard from '../components/KpiCard'
-import DataTable from '../components/DataTable'
-import BarChartCard from '../components/BarChartCard'
-import HBarChartCard from '../components/HBarChartCard'
+import Sidebar from '../components/Sidebar'
+import RankingChart from '../components/RankingChart'
+import MonthlyChart from '../components/MonthlyChart'
 import BackButton from '../components/BackButton'
 import LogoCapital from '../components/logos/LogoCapital'
-import {
-  conversoesConsultoriaMes,
-  conversoesConsultoriaPatrimonio,
-  conversoesConsultoriaCampanha,
-} from '../data/staticData'
+import { conversoesConsultoria } from '../data/staticData'
 
-const ConversoesConsultoria = ({ onBack }) => {
-  return (
-    <div className="fade-in-up" style={{ minHeight: '100vh', background: '#0a0a0a' }}>
-      <Header
-        logo={<LogoCapital height={40} />}
-        title="QUANTIDADE DE CONVERSÕES — Consultoria"
-        accentColor="#2d6a47"
+const ACCENT = '#00c875'
+
+const ConversoesConsultoria = ({ onBack }) => (
+  <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#030405' }}>
+    <Header
+      logo={<LogoCapital height={36} />}
+      title="Quantidade de Conversoes — Consultoria"
+    />
+
+    <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+      <Sidebar
+        total={conversoesConsultoria.total}
+        typeLabel="CONVERSOES"
+        rankLabel="CAMPANHA"
+        items={conversoesConsultoria.campanhas}
+        accentColor={ACCENT}
       />
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '70% 30%',
-          gap: '24px',
-          padding: '32px 40px',
-          paddingBottom: '80px',
-        }}
-      >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <BarChartCard
-            title="Ganhos da AUVP Escola"
-            data={conversoesConsultoriaMes}
-            color="#2d6a47"
-            xKey="mes"
-            tooltipBorderColor="#2d6a47"
-          />
-          <HBarChartCard
-            title="Ganhos da AUVP Escola"
-            data={conversoesConsultoriaPatrimonio}
-            color="#2d6a47"
-            tooltipBorderColor="#2d6a47"
-          />
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <KpiCard value={8} />
-          <DataTable
-            rows={conversoesConsultoriaCampanha}
-            colLabel="Campanha"
-            accentColor="#2d6a47"
-          />
-        </div>
+      <div style={{
+        flex: 1,
+        padding: '32px 40px',
+        display: 'flex',
+        gap: 24,
+        overflowY: 'auto',
+        alignItems: 'flex-start',
+      }}>
+        <MonthlyChart
+          title="Ganhos por Mes"
+          data={conversoesConsultoria.mensal}
+          accentColor={ACCENT}
+          gradientId="grad-conv-c-mes"
+        />
+        <RankingChart
+          title="Ganhos por Patrimonio"
+          data={conversoesConsultoria.patrimonio}
+          accentColor={ACCENT}
+        />
       </div>
-
-      <BackButton onBack={onBack} />
     </div>
-  )
-}
+
+    <BackButton onBack={onBack} />
+  </div>
+)
 
 export default ConversoesConsultoria

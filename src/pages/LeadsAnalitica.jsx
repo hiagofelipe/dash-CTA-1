@@ -1,63 +1,53 @@
 import Header from '../components/Header'
-import KpiCard from '../components/KpiCard'
-import DataTable from '../components/DataTable'
-import BarChartCard from '../components/BarChartCard'
-import HBarChartCard from '../components/HBarChartCard'
+import Sidebar from '../components/Sidebar'
+import RankingChart from '../components/RankingChart'
+import MonthlyChart from '../components/MonthlyChart'
 import BackButton from '../components/BackButton'
 import LogoAnalitica from '../components/logos/LogoAnalitica'
-import {
-  leadsAnaliticaModulo,
-  leadsAnaliticaMes,
-  leadsAnaliticaOferta,
-} from '../data/staticData'
+import { leadsAnalitica } from '../data/staticData'
 
-const LeadsAnalitica = ({ onBack }) => {
-  return (
-    <div className="fade-in-up" style={{ minHeight: '100vh', background: '#0a0a0a' }}>
-      <Header
-        logo={<LogoAnalitica height={40} />}
-        title="QUANTIDADE DE LEADS — Analítica"
-        accentColor="#2563a8"
+const ACCENT = '#4d94ff'
+
+const LeadsAnalitica = ({ onBack }) => (
+  <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#030405' }}>
+    <Header
+      logo={<LogoAnalitica height={36} />}
+      title="Quantidade de Leads — Analitica"
+    />
+
+    <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+      <Sidebar
+        total={leadsAnalitica.total}
+        typeLabel="LEADS"
+        rankLabel="OFERTA"
+        items={leadsAnalitica.ofertas}
+        accentColor={ACCENT}
       />
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '70% 30%',
-          gap: '24px',
-          padding: '32px 40px',
-          paddingBottom: '80px',
-        }}
-      >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <HBarChartCard
-            title="Quantidade por Módulo da Aula"
-            data={leadsAnaliticaModulo}
-            color="#2563a8"
-            tooltipBorderColor="#2563a8"
-          />
-          <BarChartCard
-            title="Quantidade por Mês"
-            data={leadsAnaliticaMes}
-            color="#2563a8"
-            xKey="mes"
-            tooltipBorderColor="#2563a8"
-          />
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <KpiCard value={39} />
-          <DataTable
-            rows={leadsAnaliticaOferta}
-            colLabel="Oferta"
-            accentColor="#2563a8"
-          />
-        </div>
+      <div style={{
+        flex: 1,
+        padding: '32px 40px',
+        display: 'flex',
+        gap: 24,
+        overflowY: 'auto',
+        alignItems: 'flex-start',
+      }}>
+        <RankingChart
+          title="Modulo da Aula"
+          data={leadsAnalitica.modulos}
+          accentColor={ACCENT}
+        />
+        <MonthlyChart
+          title="Evolucao Mensal"
+          data={leadsAnalitica.mensal}
+          accentColor={ACCENT}
+          gradientId="grad-leads-a"
+        />
       </div>
-
-      <BackButton onBack={onBack} />
     </div>
-  )
-}
+
+    <BackButton onBack={onBack} />
+  </div>
+)
 
 export default LeadsAnalitica

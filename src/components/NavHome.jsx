@@ -1,122 +1,160 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import LogoCapital from './logos/LogoCapital'
 
-const NavCard = ({ label, title, borderColor, onClick }) => {
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
+}
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+}
+
+const Panel = ({ label, number, name, accent, glow, onClick }) => {
   const [hovered, setHovered] = useState(false)
 
   return (
-    <div
+    <motion.div
+      variants={cardVariants}
       onClick={onClick}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        background: hovered ? '#1a1a1a' : '#111111',
-        border: `1px solid #1f1f1f`,
-        borderLeft: `3px solid ${borderColor}`,
-        padding: '32px',
-        cursor: 'pointer',
-        transition: 'background 200ms',
-        borderRadius: '4px',
-        minWidth: '240px',
-        flex: 1,
-      }}
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+      style={{ width: 320, height: 420, cursor: 'pointer', position: 'relative' }}
     >
-      <div
+      <motion.div
+        animate={{
+          backgroundColor: hovered ? '#0f1117' : '#08090c',
+          boxShadow: hovered
+            ? `inset 3px 0 12px ${glow}, 0 0 40px ${glow}`
+            : `inset 3px 0 12px ${glow}`,
+        }}
+        transition={{ duration: 0.3 }}
         style={{
-          fontFamily: 'Outfit, sans-serif',
-          fontSize: '10px',
-          color: '#6b6b6b',
+          height: '100%',
+          border: `1px solid ${hovered ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.06)'}`,
+          borderLeft: `2px solid ${accent}`,
+          padding: 40,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        {/* Type label */}
+        <div style={{
+          fontFamily: "'IBM Plex Mono', monospace",
+          fontSize: 10,
+          color: '#4a4f5c',
           textTransform: 'uppercase',
-          letterSpacing: '0.15em',
-          marginBottom: '8px',
-          minHeight: '16px',
-        }}
-      >
-        {label || ' '}
-      </div>
-      <div
-        style={{
-          fontFamily: '"Playfair Display", serif',
-          fontWeight: 600,
-          fontSize: '20px',
-          color: '#e5e5e5',
-        }}
-      >
-        {title}
-      </div>
-    </div>
+          letterSpacing: '0.25em',
+          minHeight: 18,
+        }}>
+          {label}
+        </div>
+
+        {/* Number hero */}
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+          <span style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontStyle: 'italic',
+            fontWeight: 300,
+            fontSize: 88,
+            color: accent,
+            lineHeight: 1,
+          }}>
+            {number}
+          </span>
+        </div>
+
+        {/* Divider */}
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', margin: '20px 0' }} />
+
+        {/* Section name */}
+        <div style={{
+          fontFamily: "'Syne', sans-serif",
+          fontWeight: 700,
+          fontSize: 18,
+          color: '#ececec',
+        }}>
+          {name}
+        </div>
+
+        {/* Arrow — appears on hover */}
+        <motion.div
+          animate={{ opacity: hovered ? 1 : 0, x: hovered ? 0 : -8 }}
+          transition={{ duration: 0.2 }}
+          style={{
+            fontFamily: "'IBM Plex Mono', monospace",
+            fontSize: 12,
+            color: accent,
+            marginTop: 16,
+          }}
+        >
+          &#8594;
+        </motion.div>
+      </motion.div>
+    </motion.div>
   )
 }
 
-const NavHome = ({ setCurrentPage }) => {
-  return (
-    <div
-      className="fade-in-up"
-      style={{
-        minHeight: '100vh',
-        background: '#0a0a0a',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '40px',
-        position: 'relative',
-      }}
-    >
-      <div style={{ width: '100%', maxWidth: '900px' }}>
-        <div
-          style={{
-            fontFamily: 'Outfit, sans-serif',
-            fontSize: '11px',
-            color: '#6b6b6b',
-            textTransform: 'uppercase',
-            letterSpacing: '0.2em',
-            marginBottom: '32px',
-            textAlign: 'center',
-          }}
-        >
-          Navegação
-        </div>
+const NavHome = ({ setCurrentPage }) => (
+  <div style={{
+    minHeight: '100vh',
+    background: '#030405',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+  }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      {/* Gold accent line */}
+      <div style={{
+        width: 40,
+        height: 2,
+        background: '#efbe4e',
+        opacity: 0.5,
+        marginBottom: 40,
+      }} />
 
-        <div
-          style={{
-            display: 'flex',
-            gap: '16px',
-          }}
-        >
-          <NavCard
-            label="Leads"
-            title="AUVP Capital"
-            borderColor="#2d6a47"
-            onClick={() => setCurrentPage('leads-consultoria')}
-          />
-          <NavCard
-            label="Conversões"
-            title="AUVP Capital"
-            borderColor="#2d6a47"
-            onClick={() => setCurrentPage('conversoes-consultoria')}
-          />
-          <NavCard
-            label=""
-            title="AUVP Analítica"
-            borderColor="#2563a8"
-            onClick={() => setCurrentPage('leads-analitica')}
-          />
-        </div>
-      </div>
-
-      <div
-        style={{
-          position: 'fixed',
-          bottom: '32px',
-          right: '40px',
-          opacity: 0.4,
-        }}
+      {/* Panels */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        style={{ display: 'flex', gap: 16 }}
       >
-        <LogoCapital height={40} />
-      </div>
+        <Panel
+          label="LEADS"
+          number="70"
+          name="AUVP Capital"
+          accent="#00c875"
+          glow="rgba(0,200,117,0.25)"
+          onClick={() => setCurrentPage('leads-consultoria')}
+        />
+        <Panel
+          label="CONVERSOES"
+          number="8"
+          name="AUVP Capital"
+          accent="#00c875"
+          glow="rgba(0,200,117,0.25)"
+          onClick={() => setCurrentPage('conversoes-consultoria')}
+        />
+        <Panel
+          label=""
+          number="39"
+          name="AUVP Analitica"
+          accent="#4d94ff"
+          glow="rgba(77,148,255,0.25)"
+          onClick={() => setCurrentPage('leads-analitica')}
+        />
+      </motion.div>
     </div>
-  )
-}
+
+    {/* Watermark logo */}
+    <div style={{ position: 'fixed', bottom: 32, right: 40, opacity: 0.15 }}>
+      <LogoCapital height={100} />
+    </div>
+  </div>
+)
 
 export default NavHome
