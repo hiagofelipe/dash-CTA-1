@@ -1,50 +1,76 @@
 import Header from '../components/Header'
-import Sidebar from '../components/Sidebar'
-import RankingChart from '../components/RankingChart'
-import MonthlyChart from '../components/MonthlyChart'
+import HeroSection from '../components/HeroSection'
+import KpiRow from '../components/KpiRow'
+import ExplainerCard from '../components/ExplainerCard'
+import ChartCard from '../components/ChartCard'
+import HBarChart from '../components/HBarChart'
+import VBarChart from '../components/VBarChart'
+import RankingSection from '../components/RankingSection'
 import BackButton from '../components/BackButton'
 import LogoCapital from '../components/logos/LogoCapital'
 import { conversoesConsultoria } from '../data/staticData'
 
-const ACCENT = '#00c875'
+const ACCENT = 'var(--capital)'
+
+const kpis = [
+  { label: 'TOTAL DE CONVERSOES', value: '8' },
+  { label: 'TAXA DE CONVERSAO', value: '11,4%', extra: 'sobre 70 leads' },
+  { label: 'CAMPANHAS', value: '2' },
+  { label: 'PERFIL DOMINANTE', value: '(Em branco)', extra: '37,5% das conversoes' },
+]
 
 const ConversoesConsultoria = ({ onBack }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#030405' }}>
+  <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
     <Header
-      logo={<LogoCapital height={36} />}
+      logo={<LogoCapital height={32} />}
+      accentLabel="CAPITAL"
       title="Quantidade de Conversoes — Consultoria"
     />
 
-    <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
-      <Sidebar
-        total={conversoesConsultoria.total}
-        typeLabel="CONVERSOES"
-        rankLabel="CAMPANHA"
-        items={conversoesConsultoria.campanhas}
+    <main style={{ paddingBottom: 80 }}>
+      <HeroSection
         accentColor={ACCENT}
+        titleBefore="Quantidade de"
+        titleAccent="conversoes"
+        titleAfter="efetivas"
+        description="Este painel mostra as conversoes efetivas — leads que se tornaram clientes da Consultoria AUVP Capital. A taxa de conversao e calculada sobre o total de leads captados no mesmo periodo."
       />
 
+      <KpiRow kpis={kpis} accentColor={ACCENT} />
+
+      <ExplainerCard text="O grafico de patrimonio mostra o perfil dos clientes que efetivamente compraram, que pode diferir do perfil de quem apenas demonstrou interesse. O grafico mensal indica o ritmo de fechamentos ao longo do periodo analisado." />
+
       <div style={{
-        flex: 1,
-        padding: '32px 40px',
-        display: 'flex',
-        gap: 24,
-        overflowY: 'auto',
-        alignItems: 'flex-start',
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gap: 16,
+        padding: '16px 40px 0',
       }}>
-        <MonthlyChart
+        <ChartCard
           title="Ganhos por Mes"
-          data={conversoesConsultoria.mensal}
+          subtitle="Volume de conversoes por mes"
           accentColor={ACCENT}
-          gradientId="grad-conv-c-mes"
-        />
-        <RankingChart
+        >
+          <VBarChart data={conversoesConsultoria.mensal} accentColor="var(--capital)" />
+        </ChartCard>
+
+        <ChartCard
           title="Ganhos por Patrimonio"
-          data={conversoesConsultoria.patrimonio}
+          subtitle="Perfil de patrimonio dos convertidos"
           accentColor={ACCENT}
-        />
+        >
+          <HBarChart data={conversoesConsultoria.patrimonio} accentColor="var(--capital)" />
+        </ChartCard>
       </div>
-    </div>
+
+      <RankingSection
+        title="Campanhas"
+        subtitle="Conversoes por campanha de origem"
+        items={conversoesConsultoria.campanhas}
+        accentColor={ACCENT}
+        rankLabel="CAMPANHA"
+      />
+    </main>
 
     <BackButton onBack={onBack} />
   </div>

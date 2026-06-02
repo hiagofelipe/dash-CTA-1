@@ -1,69 +1,78 @@
-const Header = ({ logo, title }) => (
+const Header = ({ logo, accentLabel, title }) => (
   <header style={{
-    height: 64,
-    background: '#030405',
-    borderBottom: '1px solid rgba(255,255,255,0.06)',
+    height: 56,
+    background: 'var(--bg-header)',
+    borderBottom: '1px solid var(--border)',
     padding: '0 40px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    position: 'sticky',
+    top: 0,
+    zIndex: 20,
     flexShrink: 0,
-    position: 'relative',
-    zIndex: 10,
   }}>
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    {/* Left: logo + divider + section label */}
+    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
       {logo}
+      <div style={{ width: 1, height: 24, background: 'var(--border)' }} />
+      <span style={{
+        fontFamily: 'Inter, sans-serif',
+        fontWeight: 500,
+        fontSize: 11,
+        textTransform: 'uppercase',
+        letterSpacing: '0.08em',
+        color: 'var(--text-muted)',
+      }}>
+        {accentLabel}
+      </span>
     </div>
 
+    {/* Center: page title */}
     <div style={{
       position: 'absolute',
       left: '50%',
       transform: 'translateX(-50%)',
-      fontFamily: "'Syne', sans-serif",
-      fontWeight: 700,
-      fontSize: 13,
+      fontFamily: 'Inter, sans-serif',
+      fontWeight: 600,
+      fontSize: 12,
       textTransform: 'uppercase',
-      letterSpacing: '0.18em',
-      color: '#4a4f5c',
+      letterSpacing: '0.12em',
+      color: 'var(--text-muted)',
       whiteSpace: 'nowrap',
     }}>
       {title}
     </div>
 
-    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+    {/* Right: date pickers */}
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
       <input
         type="date"
         defaultValue="2021-01-01"
         style={{
-          background: 'transparent',
-          border: 'none',
-          borderBottom: '1px solid rgba(255,255,255,0.06)',
-          color: '#4a4f5c',
-          fontFamily: "'IBM Plex Mono', monospace",
-          fontSize: 11,
-          padding: '4px 0',
+          background: 'var(--surface)',
+          border: '1px solid var(--border)',
+          borderRadius: 6,
+          color: 'var(--text-muted)',
+          fontFamily: 'Inter, sans-serif',
+          fontSize: 12,
+          padding: '4px 10px',
           outline: 'none',
           cursor: 'pointer',
         }}
       />
-      <span style={{
-        color: '#4a4f5c',
-        fontFamily: "'IBM Plex Mono', monospace",
-        fontSize: 11,
-      }}>
-        &#8212;
-      </span>
+      <span style={{ color: 'var(--text-dim)', fontSize: 12 }}>&#8212;</span>
       <input
         type="date"
         defaultValue="2026-06-01"
         style={{
-          background: 'transparent',
-          border: 'none',
-          borderBottom: '1px solid rgba(255,255,255,0.06)',
-          color: '#4a4f5c',
-          fontFamily: "'IBM Plex Mono', monospace",
-          fontSize: 11,
-          padding: '4px 0',
+          background: 'var(--surface)',
+          border: '1px solid var(--border)',
+          borderRadius: 6,
+          color: 'var(--text-muted)',
+          fontFamily: 'Inter, sans-serif',
+          fontSize: 12,
+          padding: '4px 10px',
           outline: 'none',
           cursor: 'pointer',
         }}

@@ -1,38 +1,43 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
 
-const BackButton = ({ onBack, accentColor = '#4a4f5c' }) => (
-  <motion.button
-    onClick={onBack}
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-    style={{
-      position: 'fixed',
-      bottom: 32,
-      left: 32,
-      width: 40,
-      height: 40,
-      background: '#08090c',
-      border: '1px solid rgba(255,255,255,0.06)',
-      cursor: 'pointer',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 100,
-      borderRadius: 0,
-      padding: 0,
-    }}
-    title="Voltar"
-  >
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path
-        d="M10 3L5 8L10 13"
-        stroke="#4a4f5c"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  </motion.button>
-)
+const BackButton = ({ onBack }) => {
+  const [hovered, setHovered] = useState(false)
+
+  return (
+    <button
+      onClick={onBack}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        position: 'fixed',
+        bottom: 28,
+        left: 28,
+        width: 36,
+        height: 36,
+        background: hovered ? 'var(--surface-2)' : 'var(--surface)',
+        border: '1px solid var(--border)',
+        borderRadius: 8,
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        transition: 'background 200ms',
+        zIndex: 100,
+        padding: 0,
+      }}
+      title="Voltar"
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path
+          d="M9 2L4 7L9 12"
+          stroke="#888888"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
+  )
+}
 
 export default BackButton

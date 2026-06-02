@@ -3,22 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --bg:            #030405;
-  --surface:       #08090c;
-  --surface-2:     #0f1117;
-  --border:        rgba(255,255,255,0.06);
-  --border-bright: rgba(255,255,255,0.12);
-  --text:          #ececec;
-  --text-muted:    #4a4f5c;
-  --text-dim:      #2a2d35;
-  --gold:          #efbe4e;
-  --gold-dim:      rgba(239,190,78,0.12);
-  --capital:       #00c875;
-  --capital-dim:   rgba(0,200,117,0.08);
-  --capital-glow:  rgba(0,200,117,0.25);
-  --analitica:     #4d94ff;
-  --analitica-dim: rgba(77,148,255,0.08);
-  --analitica-glow:rgba(77,148,255,0.25);
+  --bg:           #111111;
+  --bg-header:    #0d0d0d;
+  --surface:      #1a1a1a;
+  --surface-2:    #222222;
+  --border:       #2a2a2a;
+  --border-light: #333333;
+  --text:         #f0f0f0;
+  --text-muted:   #888888;
+  --text-dim:     #555555;
+  --capital:      #efbe4e;
+  --capital-dim:  rgba(239,190,78,0.15);
+  --analitica:    #4d94ff;
+  --analitica-dim:rgba(77,148,255,0.15);
 }
 
 * {
@@ -27,39 +24,21 @@
   padding: 0;
 }
 
-html, body {
-  height: 100%;
+html, body, #root {
+  min-height: 100%;
 }
 
 body {
+  font-family: 'Inter', sans-serif;
   background-color: var(--bg);
   color: var(--text);
-  font-family: 'IBM Plex Mono', monospace;
-  min-height: 100vh;
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 79px,
-    rgba(255,255,255,0.025) 79px,
-    rgba(255,255,255,0.025) 80px
-  );
-}
-
-#root {
-  min-height: 100vh;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(0.3);
+  filter: invert(0.4);
   cursor: pointer;
 }
 
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: var(--surface);
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.08);
-}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 2px; }
