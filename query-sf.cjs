@@ -35,7 +35,7 @@ function base64url(b) {
   if (!auth.ok) throw new Error(JSON.stringify(token));
   console.log('autenticado.');
 
-  const soql = "SELECT Id, Name, StageName, CreatedDate, LeadSource, Campaign.Name FROM Opportunity WHERE StageName = 'Fechado e ganho' ORDER BY CreatedDate DESC LIMIT 10";
+  const soql = "SELECT RecordType.Name, COUNT(Id) total FROM Opportunity WHERE StageName = 'Fechado e ganho' GROUP BY RecordType.Name ORDER BY COUNT(Id) DESC LIMIT 20";
   const r = await fetch(INSTANCE_URL + '/services/data/v59.0/query?q=' + encodeURIComponent(soql), {
     headers: { Authorization: 'Bearer ' + token.access_token },
   });
