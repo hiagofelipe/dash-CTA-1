@@ -47,7 +47,7 @@ const ConversoesConsultoria = ({ onBack }) => (
         padding: '16px 40px 0',
       }}>
         <ChartCard
-          title="Ganhos por Mes"
+          title="Ganhos por Mês"
           subtitle="Volume de conversões por mês"
           accentColor={ACCENT}
         >
