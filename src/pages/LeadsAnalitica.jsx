@@ -8,72 +8,82 @@ import VBarChart from '../components/VBarChart'
 import RankingSection from '../components/RankingSection'
 import BackButton from '../components/BackButton'
 import LogoAnalitica from '../components/logos/LogoAnalitica'
-import { leadsAnalitica } from '../data/staticData'
 
 const ACCENT = 'var(--analitica)'
 
-const kpis = [
-  { label: 'TOTAL DE LEADS', value: '39' },
-  { label: 'MODULOS ATIVOS', value: '4' },
-  { label: 'MES RECORDE', value: 'abril', extra: '23 leads' },
-  { label: 'PLANO DOMINANTE', value: 'Trial 14 dias', extra: '82% dos leads' },
-]
+const LeadsAnalitica = ({ onBack, data }) => {
+  const total = data?.total ?? 0
+  const modulos = data?.por_modulo ?? []
+  const mensal = data?.por_mes ?? []
+  const ofertas = data?.por_oferta ?? []
 
-const LeadsAnalitica = ({ onBack }) => (
-  <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
-    <Header
-      logo={<LogoAnalitica height={32} />}
-      accentLabel="ANALITICA"
-      title="Quantidade de Leads — Analitica"
-    />
+  const recorde = mensal.reduce((max, m) => (m.value > (max?.value ?? 0) ? m : max), null)
+  const topOferta = ofertas[0]
+  const pctTop = total > 0 && topOferta ? Math.round((topOferta.qtd / total) * 100) : 0
 
-    <main style={{ paddingBottom: 80 }}>
-      <HeroSection
-        accentColor={ACCENT}
-        titleBefore="Quantidade de"
-        titleAccent="leads"
-        titleAfter="Analitica"
-        description="Este painel mostra os leads captados para a AUVP Analitica. O grafico de modulos mostra em qual aula do programa o lead foi gerado — o que indica quais conteudos tem maior poder de captacao."
+  const kpis = [
+    { label: 'TOTAL DE LEADS', value: total.toLocaleString('pt-BR') },
+    { label: 'MODULOS ATIVOS', value: String(modulos.length) },
+    { label: 'MES RECORDE', value: recorde?.mes ?? '-', extra: recorde ? `${recorde.value} leads` : '' },
+    { label: 'PLANO DOMINANTE', value: topOferta?.nome ?? '-', extra: `${pctTop}% dos leads` },
+  ]
+
+  return (
+    <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
+      <Header
+        logo={<LogoAnalitica height={32} />}
+        accentLabel="ANALITICA"
+        title="Quantidade de Leads — Analitica"
       />
 
-      <KpiRow kpis={kpis} accentColor={ACCENT} />
-
-      <ExplainerCard text="O grafico de modulos mostra em qual aula do programa o lead foi gerado — o que indica quais conteudos tem maior poder de captacao. A tabela de ofertas mostra quais planos tiveram mais interesse no periodo selecionado." />
-
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: 16,
-        padding: '16px 40px 0',
-      }}>
-        <ChartCard
-          title="Modulo da Aula"
-          subtitle="Leads por modulo de origem"
+      <main style={{ paddingBottom: 80 }}>
+        <HeroSection
           accentColor={ACCENT}
-        >
-          <HBarChart data={leadsAnalitica.modulos} accentColor="var(--analitica)" />
-        </ChartCard>
+          titleBefore="Quantidade de"
+          titleAccent="leads"
+          titleAfter="Analitica"
+          description="Este painel mostra os leads captados para a AUVP Analitica. O grafico de modulos mostra em qual aula do programa o lead foi gerado — o que indica quais conteudos tem maior poder de captacao."
+        />
 
-        <ChartCard
-          title="Evolucao Mensal"
-          subtitle="Volume de leads por mes"
+        <KpiRow kpis={kpis} accentColor={ACCENT} />
+
+        <ExplainerCard text="O grafico de modulos mostra em qual aula do programa o lead foi gerado — o que indica quais conteudos tem maior poder de captacao. A tabela de ofertas mostra quais planos tiveram mais interesse no periodo selecionado." />
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: 16,
+          padding: '16px 40px 0',
+        }}>
+          <ChartCard
+            title="Modulo da Aula"
+            subtitle="Leads por modulo de origem"
+            accentColor={ACCENT}
+          >
+            <HBarChart data={modulos} accentColor="var(--analitica)" />
+          </ChartCard>
+
+          <ChartCard
+            title="Evolucao Mensal"
+            subtitle="Volume de leads por mes"
+            accentColor={ACCENT}
+          >
+            <VBarChart data={mensal} accentColor="var(--analitica)" />
+          </ChartCard>
+        </div>
+
+        <RankingSection
+          title="Ofertas"
+          subtitle="Leads por plano de interesse"
+          items={ofertas}
           accentColor={ACCENT}
-        >
-          <VBarChart data={leadsAnalitica.mensal} accentColor="var(--analitica)" />
-        </ChartCard>
-      </div>
+          rankLabel="OFERTA"
+        />
+      </main>
 
-      <RankingSection
-        title="Ofertas"
-        subtitle="Leads por plano de interesse"
-        items={leadsAnalitica.ofertas}
-        accentColor={ACCENT}
-        rankLabel="OFERTA"
-      />
-    </main>
-
-    <BackButton onBack={onBack} />
-  </div>
-)
+      <BackButton onBack={onBack} />
+    </div>
+  )
+}
 
 export default LeadsAnalitica
