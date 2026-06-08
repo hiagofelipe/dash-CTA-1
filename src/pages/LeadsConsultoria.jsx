@@ -21,8 +21,8 @@ const LeadsConsultoria = ({ onBack, data }) => {
 
   const kpis = [
     { label: 'TOTAL DE LEADS', value: total.toLocaleString('pt-BR') },
-    { label: 'PERFIS DE PATRIMONIO', value: String(patrimonio.length) },
-    { label: 'MES RECORDE', value: recorde?.mes ?? '-', extra: recorde ? `${recorde.value} leads` : '' },
+    { label: 'PERFIS DE PATRIMÔNIO', value: String(patrimonio.length) },
+    { label: 'MÊS RECORDE', value: recorde?.mes ?? '-', extra: recorde ? `${recorde.value} leads` : '' },
     { label: 'PERFIL DOMINANTE', value: dominante?.label ?? '-', extra: `${pctDominante}% dos leads` },
   ]
 
@@ -40,12 +40,12 @@ const LeadsConsultoria = ({ onBack, data }) => {
           titleBefore="Quantidade de"
           titleAccent="leads"
           titleAfter="captados"
-          description="Este painel mostra os leads captados para a Consultoria AUVP Capital. Cada lead representa uma pessoa que demonstrou interesse mas ainda nao converteu. O grafico de patrimonio mostra o perfil financeiro declarado dos leads — util para entender o publico que o CTA esta alcancando."
+          description="Este painel mostra os leads captados para a Consultoria AUVP Capital. Cada lead representa uma pessoa que demonstrou interesse mas ainda não converteu. O gráfico de patrimônio mostra o perfil financeiro declarado dos leads — útil para entender o público que o CTA está alcançando."
         />
 
         <KpiRow kpis={kpis} accentColor={ACCENT} />
 
-        <ExplainerCard text="O grafico de patrimonio mostra o perfil financeiro declarado dos leads — util para entender o publico que o CTA esta alcancando. O grafico mensal mostra o volume de captacao ao longo do tempo por campanha de origem." />
+        <ExplainerCard text="O gráfico de patrimônio mostra o perfil financeiro declarado dos leads — útil para entender o público que o CTA está alcançando. O gráfico mensal mostra o volume de captação ao longo do tempo por campanha de origem." />
 
         <div style={{
           display: 'grid',
@@ -54,16 +54,16 @@ const LeadsConsultoria = ({ onBack, data }) => {
           padding: '16px 40px 0',
         }}>
           <ChartCard
-            title="Patrimonio Investido"
-            subtitle="Distribuicao por faixa de patrimonio declarado"
+            title="Patrimônio Investido"
+            subtitle="Distribuição por faixa de patrimônio declarado"
             accentColor={ACCENT}
           >
             <HBarChart data={patrimonio} accentColor="var(--capital)" />
           </ChartCard>
 
           <ChartCard
-            title="Evolucao Mensal"
-            subtitle="Volume de leads por mes"
+            title="Evolução Mensal"
+            subtitle="Volume de leads por mês"
             accentColor={ACCENT}
           >
             <VBarChart data={mensal} accentColor="var(--capital)" />

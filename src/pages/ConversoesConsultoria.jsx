@@ -13,10 +13,10 @@ import { conversoesConsultoria } from '../data/staticData'
 const ACCENT = 'var(--capital)'
 
 const kpis = [
-  { label: 'TOTAL DE CONVERSOES', value: '8' },
-  { label: 'TAXA DE CONVERSAO', value: '11,4%', extra: 'sobre 70 leads' },
+  { label: 'TOTAL DE CONVERSÕES', value: '8' },
+  { label: 'TAXA DE CONVERSÃO', value: '11,4%', extra: 'sobre 70 leads' },
   { label: 'CAMPANHAS', value: '2' },
-  { label: 'PERFIL DOMINANTE', value: '(Em branco)', extra: '37,5% das conversoes' },
+  { label: 'PERFIL DOMINANTE', value: '(Em branco)', extra: '37,5% das conversões' },
 ]
 
 const ConversoesConsultoria = ({ onBack }) => (
@@ -24,21 +24,21 @@ const ConversoesConsultoria = ({ onBack }) => (
     <Header
       logo={<LogoCapital height={32} />}
       accentLabel="CAPITAL"
-      title="Quantidade de Conversoes — Consultoria"
+      title="Quantidade de Conversões — Consultoria"
     />
 
     <main style={{ paddingBottom: 80 }}>
       <HeroSection
         accentColor={ACCENT}
         titleBefore="Quantidade de"
-        titleAccent="conversoes"
+        titleAccent="conversões"
         titleAfter="efetivas"
-        description="Este painel mostra as conversoes efetivas — leads que se tornaram clientes da Consultoria AUVP Capital. A taxa de conversao e calculada sobre o total de leads captados no mesmo periodo."
+        description="Este painel mostra as conversões efetivas — leads que se tornaram clientes da Consultoria AUVP Capital. A taxa de conversão é calculada sobre o total de leads captados no mesmo período."
       />
 
       <KpiRow kpis={kpis} accentColor={ACCENT} />
 
-      <ExplainerCard text="O grafico de patrimonio mostra o perfil dos clientes que efetivamente compraram, que pode diferir do perfil de quem apenas demonstrou interesse. O grafico mensal indica o ritmo de fechamentos ao longo do periodo analisado." />
+      <ExplainerCard text="O gráfico de patrimônio mostra o perfil dos clientes que efetivamente compraram, que pode diferir do perfil de quem apenas demonstrou interesse. O gráfico mensal indica o ritmo de fechamentos ao longo do período analisado." />
 
       <div style={{
         display: 'grid',
@@ -48,15 +48,15 @@ const ConversoesConsultoria = ({ onBack }) => (
       }}>
         <ChartCard
           title="Ganhos por Mes"
-          subtitle="Volume de conversoes por mes"
+          subtitle="Volume de conversões por mês"
           accentColor={ACCENT}
         >
           <VBarChart data={conversoesConsultoria.mensal} accentColor="var(--capital)" />
         </ChartCard>
 
         <ChartCard
-          title="Ganhos por Patrimonio"
-          subtitle="Perfil de patrimonio dos convertidos"
+          title="Ganhos por Patrimônio"
+          subtitle="Perfil de patrimônio dos convertidos"
           accentColor={ACCENT}
         >
           <HBarChart data={conversoesConsultoria.patrimonio} accentColor="var(--capital)" />
@@ -65,7 +65,7 @@ const ConversoesConsultoria = ({ onBack }) => (
 
       <RankingSection
         title="Campanhas"
-        subtitle="Conversoes por campanha de origem"
+        subtitle="Conversões por campanha de origem"
         items={conversoesConsultoria.campanhas}
         accentColor={ACCENT}
         rankLabel="CAMPANHA"

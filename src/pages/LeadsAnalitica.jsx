@@ -23,8 +23,8 @@ const LeadsAnalitica = ({ onBack, data }) => {
 
   const kpis = [
     { label: 'TOTAL DE LEADS', value: total.toLocaleString('pt-BR') },
-    { label: 'MODULOS ATIVOS', value: String(modulos.length) },
-    { label: 'MES RECORDE', value: recorde?.mes ?? '-', extra: recorde ? `${recorde.value} leads` : '' },
+    { label: 'MÓDULOS ATIVOS', value: String(modulos.length) },
+    { label: 'MÊS RECORDE', value: recorde?.mes ?? '-', extra: recorde ? `${recorde.value} leads` : '' },
     { label: 'PLANO DOMINANTE', value: topOferta?.nome ?? '-', extra: `${pctTop}% dos leads` },
   ]
 
@@ -32,8 +32,8 @@ const LeadsAnalitica = ({ onBack, data }) => {
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
       <Header
         logo={<LogoAnalitica height={32} />}
-        accentLabel="ANALITICA"
-        title="Quantidade de Leads — Analitica"
+        accentLabel="ANALÍTICA"
+        title="Quantidade de Leads — Analítica"
       />
 
       <main style={{ paddingBottom: 80 }}>
@@ -41,13 +41,13 @@ const LeadsAnalitica = ({ onBack, data }) => {
           accentColor={ACCENT}
           titleBefore="Quantidade de"
           titleAccent="leads"
-          titleAfter="Analitica"
-          description="Este painel mostra os leads captados para a AUVP Analitica. O grafico de modulos mostra em qual aula do programa o lead foi gerado — o que indica quais conteudos tem maior poder de captacao."
+          titleAfter="Analítica"
+          description="Este painel mostra os leads captados para a AUVP Analítica. O gráfico de módulos mostra em qual aula do programa o lead foi gerado — o que indica quais conteúdos têm maior poder de captação."
         />
 
         <KpiRow kpis={kpis} accentColor={ACCENT} />
 
-        <ExplainerCard text="O grafico de modulos mostra em qual aula do programa o lead foi gerado — o que indica quais conteudos tem maior poder de captacao. A tabela de ofertas mostra quais planos tiveram mais interesse no periodo selecionado." />
+        <ExplainerCard text="O gráfico de módulos mostra em qual aula do programa o lead foi gerado — o que indica quais conteúdos têm maior poder de captação. A tabela de ofertas mostra quais planos tiveram mais interesse no período selecionado." />
 
         <div style={{
           display: 'grid',
@@ -56,16 +56,16 @@ const LeadsAnalitica = ({ onBack, data }) => {
           padding: '16px 40px 0',
         }}>
           <ChartCard
-            title="Modulo da Aula"
-            subtitle="Leads por modulo de origem"
+            title="Módulo da Aula"
+            subtitle="Leads por módulo de origem"
             accentColor={ACCENT}
           >
             <HBarChart data={modulos} accentColor="var(--analitica)" />
           </ChartCard>
 
           <ChartCard
-            title="Evolucao Mensal"
-            subtitle="Volume de leads por mes"
+            title="Evolução Mensal"
+            subtitle="Volume de leads por mês"
             accentColor={ACCENT}
           >
             <VBarChart data={mensal} accentColor="var(--analitica)" />

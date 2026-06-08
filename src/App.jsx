@@ -34,7 +34,7 @@ const App = () => {
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
-      {currentPage === 'home' && <NavHome setCurrentPage={setCurrentPage} />}
+      {currentPage === 'home' && <NavHome setCurrentPage={setCurrentPage} ctaData={ctaData} />}
       {currentPage === 'leads-consultoria' && (
         <LeadsConsultoria onBack={goHome} data={ctaData?.leads_consultoria} />
       )}

@@ -87,7 +87,7 @@ const NavCard = ({ label, number, name, footer, accentColor, onClick }) => {
   )
 }
 
-const NavHome = ({ setCurrentPage }) => (
+const NavHome = ({ setCurrentPage, ctaData }) => (
   <div style={{
     minHeight: '100vh',
     background: 'var(--bg)',
@@ -101,14 +101,14 @@ const NavHome = ({ setCurrentPage }) => (
     <div style={{ display: 'flex', gap: 20 }}>
       <NavCard
         label="LEADS"
-        number="70"
+        number={String(ctaData?.leads_consultoria?.total ?? '—')}
         name="AUVP Capital"
         footer="Consultoria de investimentos"
         accentColor="var(--capital)"
         onClick={() => setCurrentPage('leads-consultoria')}
       />
       <NavCard
-        label="CONVERSOES"
+        label="CONVERSÕES"
         number="8"
         name="AUVP Capital"
         footer="Consultoria de investimentos"
@@ -116,10 +116,10 @@ const NavHome = ({ setCurrentPage }) => (
         onClick={() => setCurrentPage('conversoes-consultoria')}
       />
       <NavCard
-        label=""
-        number="39"
-        name="AUVP Analitica"
-        footer="Plataforma de analise"
+        label="LEADS"
+        number={String(ctaData?.leads_analitica?.total ?? '—')}
+        name="AUVP Analítica"
+        footer="Plataforma de análise"
         accentColor="var(--analitica)"
         onClick={() => setCurrentPage('leads-analitica')}
       />
