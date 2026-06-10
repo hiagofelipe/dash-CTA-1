@@ -82,15 +82,16 @@ serve(async (req) => {
 
     const token = await getAccessToken()
 
-    let soql = `SELECT Id, CreatedDate FROM Opportunity WHERE Produto__c = 'AUVP Consultoria' AND StageName = 'Fechado e ganho'`
+    let soql = `SELECT Id, CreatedDate, UTMCampaign__c FROM Opportunity WHERE Produto__c = 'AUVP Consultoria' AND StageName = 'Fechado e ganho' AND UTMSource__c = 'auvpescola'`
     if (startDate) soql += ` AND CreatedDate >= ${startDate}T00:00:00Z`
     if (endDate)   soql += ` AND CreatedDate <= ${endDate}T23:59:59Z`
     soql += ` ORDER BY CreatedDate DESC`
 
     const records = await queryAll(token, soql)
 
-    const mesMap = new Map<string, { order: string; value: number }>()
-    const anoMap = new Map<string, number>()
+    const mesMap      = new Map<string, { order: string; value: number }>()
+    const anoMap      = new Map<string, number>()
+    const campanhaMap = new Map<string, number>()
 
     for (const r of records) {
       const label = toMesLabel(r.CreatedDate)
@@ -102,6 +103,9 @@ serve(async (req) => {
       else mesMap.set(label, { order, value: 1 })
 
       anoMap.set(ano, (anoMap.get(ano) ?? 0) + 1)
+
+      const camp = r.UTMCampaign__c ?? '(sem campanha)'
+      campanhaMap.set(camp, (campanhaMap.get(camp) ?? 0) + 1)
     }
 
     const por_mes = [...mesMap.entries()]
@@ -112,8 +116,12 @@ serve(async (req) => {
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([mes, value]) => ({ mes, value }))
 
+    const por_campanha = [...campanhaMap.entries()]
+      .sort(([, a], [, b]) => b - a)
+      .map(([nome, qtd]) => ({ nome, qtd }))
+
     return new Response(
-      JSON.stringify({ total: records.length, por_mes, por_ano }),
+      JSON.stringify({ total: records.length, por_mes, por_ano, por_campanha }),
       { headers: { ...CORS, 'Content-Type': 'application/json' } }
     )
   } catch (err: any) {

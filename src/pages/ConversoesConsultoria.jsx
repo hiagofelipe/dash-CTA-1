@@ -4,6 +4,7 @@ import KpiRow from '../components/KpiRow'
 import ExplainerCard from '../components/ExplainerCard'
 import ChartCard from '../components/ChartCard'
 import VBarChart from '../components/VBarChart'
+import RankingSection from '../components/RankingSection'
 import BackButton from '../components/BackButton'
 import LogoCapital from '../components/logos/LogoCapital'
 import { formatNumber } from '../lib/utils'
@@ -37,9 +38,10 @@ const ConversoesConsultoria = ({ onBack, data, startDate, endDate, onStartChange
     </div>
   )
 
-  const total  = data.total ?? 0
-  const mensal = data.por_mes ?? []
-  const anual  = data.por_ano ?? []
+  const total     = data.total ?? 0
+  const mensal    = data.por_mes ?? []
+  const anual     = data.por_ano ?? []
+  const campanhas = data.por_campanha ?? []
 
   const recorde     = mensal.reduce((max, m) => (m.value > (max?.value ?? 0) ? m : max), null)
   const anoRecorde  = anual.reduce((max, a) => (a.value > (max?.value ?? 0) ? a : max), null)
@@ -57,7 +59,7 @@ const ConversoesConsultoria = ({ onBack, data, startDate, endDate, onStartChange
       <Header
         logo={<LogoCapital height={32} />}
         accentLabel="CAPITAL"
-        title="Quantidade de Conversões — Consultoria"
+        title="Conversões via AUVP Escola — Consultoria"
         startDate={startDate}
         endDate={endDate}
         onStartChange={onStartChange}
@@ -67,15 +69,15 @@ const ConversoesConsultoria = ({ onBack, data, startDate, endDate, onStartChange
       <main style={{ paddingBottom: 80 }}>
         <HeroSection
           accentColor={ACCENT}
-          titleBefore="Quantidade de"
-          titleAccent="conversões"
-          titleAfter="efetivas"
-          description="Este painel mostra as conversões efetivas da Consultoria AUVP Capital — leads que fecharam negócio. Os dados são extraídos em tempo real do Salesforce."
+          titleBefore="Conversões originadas da"
+          titleAccent="AUVP Escola"
+          titleAfter=""
+          description="Este painel mostra as conversões da Consultoria AUVP Capital originadas da AUVP Escola (UTM Source: auvpescola). Os dados são extraídos em tempo real do Salesforce."
         />
 
         <KpiRow kpis={kpis} accentColor={ACCENT} />
 
-        <ExplainerCard text="O gráfico mensal mostra a evolução de fechamentos mês a mês ao longo de todo o período. O gráfico anual permite comparar o volume total de conversões entre os anos." />
+        <ExplainerCard text="O gráfico mensal mostra a evolução de fechamentos mês a mês. O gráfico anual compara o volume total por ano. O ranking de campanhas mostra quais aulas/módulos da Escola geraram mais conversões para a Consultoria." />
 
         <div style={{
           display: 'grid',
@@ -99,6 +101,14 @@ const ConversoesConsultoria = ({ onBack, data, startDate, endDate, onStartChange
             <VBarChart data={anual} accentColor="var(--capital)" barSize={72} />
           </ChartCard>
         </div>
+
+        <RankingSection
+          title="Campanhas da Escola"
+          subtitle="Conversões por aula/módulo de origem"
+          items={campanhas}
+          accentColor={ACCENT}
+          rankLabel="CAMPANHA"
+        />
       </main>
 
       <BackButton onBack={onBack} />
