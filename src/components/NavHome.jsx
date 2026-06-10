@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import LogoCapital from './logos/LogoCapital'
+import { formatNumber } from '../lib/utils'
 
 const NavCard = ({ label, number, name, footer, accentColor, onClick }) => {
   const [hovered, setHovered] = useState(false)
@@ -87,7 +88,7 @@ const NavCard = ({ label, number, name, footer, accentColor, onClick }) => {
   )
 }
 
-const NavHome = ({ setCurrentPage, ctaData }) => (
+const NavHome = ({ setCurrentPage, ctaData, totalConversoes }) => (
   <div style={{
     minHeight: '100vh',
     background: 'var(--bg)',
@@ -101,7 +102,7 @@ const NavHome = ({ setCurrentPage, ctaData }) => (
     <div style={{ display: 'flex', gap: 20 }}>
       <NavCard
         label="LEADS"
-        number={String(ctaData?.leads_consultoria?.total ?? '—')}
+        number={ctaData?.leads_consultoria?.total != null ? formatNumber(ctaData.leads_consultoria.total) : '—'}
         name="AUVP Capital"
         footer="Consultoria de investimentos"
         accentColor="var(--capital)"
@@ -109,7 +110,7 @@ const NavHome = ({ setCurrentPage, ctaData }) => (
       />
       <NavCard
         label="CONVERSÕES"
-        number="8"
+        number={totalConversoes != null ? formatNumber(totalConversoes) : '—'}
         name="AUVP Capital"
         footer="Consultoria de investimentos"
         accentColor="var(--capital)"
@@ -117,7 +118,7 @@ const NavHome = ({ setCurrentPage, ctaData }) => (
       />
       <NavCard
         label="LEADS"
-        number={String(ctaData?.leads_analitica?.total ?? '—')}
+        number={ctaData?.leads_analitica?.total != null ? formatNumber(ctaData.leads_analitica.total) : '—'}
         name="AUVP Analítica"
         footer="Plataforma de análise"
         accentColor="var(--analitica)"

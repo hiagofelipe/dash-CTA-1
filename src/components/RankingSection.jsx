@@ -1,3 +1,5 @@
+import { formatNumber } from '../lib/utils'
+
 const RankingSection = ({ title, subtitle, items, accentColor, rankLabel }) => {
   const max = Math.max(...items.map(i => i.qtd ?? i.value ?? 0))
   const total = items.reduce((s, i) => s + (i.qtd ?? i.value ?? 0), 0)
@@ -103,7 +105,7 @@ const RankingSection = ({ title, subtitle, items, accentColor, rankLabel }) => {
               color: 'var(--text)',
               textAlign: 'right',
             }}>
-              {val}
+              {formatNumber(val)}
             </span>
 
             {/* Percentage */}
@@ -147,7 +149,7 @@ const RankingSection = ({ title, subtitle, items, accentColor, rankLabel }) => {
           color: accentColor,
           textAlign: 'right',
         }}>
-          {total}
+          {formatNumber(total)}
         </span>
         <span />
       </div>

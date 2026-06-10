@@ -1,4 +1,4 @@
-const Header = ({ logo, accentLabel, title }) => (
+const Header = ({ logo, accentLabel, title, startDate, endDate, onStartChange, onEndChange }) => (
   <header style={{
     height: 56,
     background: 'var(--bg-header)',
@@ -48,7 +48,8 @@ const Header = ({ logo, accentLabel, title }) => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
       <input
         type="date"
-        defaultValue="2021-01-01"
+        value={startDate ?? ''}
+        onChange={e => onStartChange?.(e.target.value)}
         style={{
           background: 'var(--surface)',
           border: '1px solid var(--border)',
@@ -64,7 +65,8 @@ const Header = ({ logo, accentLabel, title }) => (
       <span style={{ color: 'var(--text-dim)', fontSize: 12 }}>&#8212;</span>
       <input
         type="date"
-        defaultValue="2026-06-01"
+        value={endDate ?? ''}
+        onChange={e => onEndChange?.(e.target.value)}
         style={{
           background: 'var(--surface)',
           border: '1px solid var(--border)',

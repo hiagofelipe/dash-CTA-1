@@ -7,23 +7,24 @@ import HBarChart from '../components/HBarChart'
 import VBarChart from '../components/VBarChart'
 import BackButton from '../components/BackButton'
 import LogoCapital from '../components/logos/LogoCapital'
+import { formatNumber } from '../lib/utils'
 
 const ACCENT = 'var(--capital)'
 
-const LeadsConsultoria = ({ onBack, data }) => {
-  const total = data?.total ?? 0
+const LeadsConsultoria = ({ onBack, data, startDate, endDate, onStartChange, onEndChange }) => {
+  const total      = data?.total ?? 0
   const patrimonio = data?.por_patrimonio ?? []
-  const mensal = data?.por_mes ?? []
+  const mensal     = data?.por_mes ?? []
 
-  const dominante = patrimonio[0]
-  const recorde = mensal.reduce((max, m) => (m.value > (max?.value ?? 0) ? m : max), null)
+  const dominante    = patrimonio[0]
+  const recorde      = mensal.reduce((max, m) => (m.value > (max?.value ?? 0) ? m : max), null)
   const pctDominante = total > 0 && dominante ? Math.round((dominante.value / total) * 100) : 0
 
   const kpis = [
-    { label: 'TOTAL DE LEADS', value: total.toLocaleString('pt-BR') },
+    { label: 'TOTAL DE LEADS',      value: formatNumber(total) },
     { label: 'PERFIS DE PATRIMÔNIO', value: String(patrimonio.length) },
-    { label: 'MÊS RECORDE', value: recorde?.mes ?? '-', extra: recorde ? `${recorde.value} leads` : '' },
-    { label: 'PERFIL DOMINANTE', value: dominante?.label ?? '-', extra: `${pctDominante}% dos leads` },
+    { label: 'MÊS RECORDE',         value: recorde?.mes ?? '-', extra: recorde ? `${formatNumber(recorde.value)} leads` : '' },
+    { label: 'PERFIL DOMINANTE',    value: dominante?.label ?? '-', extra: `${pctDominante}% dos leads` },
   ]
 
   return (
@@ -32,6 +33,10 @@ const LeadsConsultoria = ({ onBack, data }) => {
         logo={<LogoCapital height={32} />}
         accentLabel="CAPITAL"
         title="Quantidade de Leads — Consultoria"
+        startDate={startDate}
+        endDate={endDate}
+        onStartChange={onStartChange}
+        onEndChange={onEndChange}
       />
 
       <main style={{ paddingBottom: 80 }}>
@@ -66,7 +71,7 @@ const LeadsConsultoria = ({ onBack, data }) => {
             subtitle="Volume de leads por mês"
             accentColor={ACCENT}
           >
-            <VBarChart data={mensal} accentColor="var(--capital)" />
+            <VBarChart data={mensal} accentColor="var(--capital)" barSize={10} />
           </ChartCard>
         </div>
       </main>
